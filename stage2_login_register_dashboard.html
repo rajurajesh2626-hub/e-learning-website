@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LearnHub — Stage 2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f8fafc;color:#172033}
+.container{width:min(1100px,92%);margin:auto}nav{height:70px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center}
+.nav{display:flex;justify-content:space-between;align-items:center}.logo{font-size:24px;font-weight:800;color:#2563eb}
+.navlinks{display:flex;gap:12px}.btn{border:0;border-radius:9px;padding:11px 17px;font-weight:700;cursor:pointer}.primary{background:#2563eb;color:white}.light{background:#eaf1ff;color:#2563eb}
+.page{padding:55px 0}.hidden{display:none}.box{max-width:430px;margin:auto;background:white;padding:30px;border-radius:18px;border:1px solid #e2e8f0;box-shadow:0 12px 35px #0f172a12}
+h1{font-size:32px;margin-bottom:8px}.muted{color:#64748b}.form{margin-top:22px}.field{margin-bottom:15px}.field label{display:block;font-weight:700;margin-bottom:6px}.field input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px}.form .btn{width:100%;margin-top:5px}
+.switch{text-align:center;margin-top:18px}.link{color:#2563eb;font-weight:700;cursor:pointer}
+.dashboard-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:30px}.stat,.course{background:white;border:1px solid #e2e8f0;border-radius:15px;padding:20px}.stat strong{font-size:28px;display:block}.courses{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.course .icon{font-size:32px;background:#eff6ff;border-radius:12px;padding:15px;width:max-content;margin-bottom:15px}.course h3{margin-bottom:7px}.course p{color:#64748b;margin-bottom:15px}.toast{position:fixed;right:20px;bottom:20px;background:#172033;color:#fff;padding:13px 17px;border-radius:9px;display:none}
+@media(max-width:750px){.navlinks{display:none}.stats,.courses{grid-template-columns:1fr}.dashboard-head{gap:15px;align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<nav><div class="container nav">
+<a class="logo" href="#" onclick="show('home')">LearnHub</a>
+<div class="navlinks"><button class="btn light" onclick="show('login')">Login</button><button class="btn primary" onclick="show('register')">Get Started</button></div>
+</div></nav>
+
+<main class="page">
+<section id="home" class="container">
+<div class="box" style="text-align:center">
+<h1>Welcome to LearnHub</h1><p class="muted">Free technical learning platform</p><br>
+<button class="btn primary" onclick="show('register')">Create Free Account</button>
+<button class="btn light" onclick="show('login')" style="margin-top:10px">Login</button>
+</div>
+</section>
+
+<section id="register" class="hidden container">
+<div class="box">
+<h1>Create Account</h1><p class="muted">Start your free learning journey.</p>
+<form class="form" onsubmit="register(event)">
+<div class="field"><label>Full Name</label><input id="rname" required></div>
+<div class="field"><label>Email</label><input id="remail" type="email" required></div>
+<div class="field"><label>Phone Number</label><input id="rphone" required></div>
+<div class="field"><label>Password</label><input id="rpass" type="password" minlength="6" required></div>
+<div class="field"><label>Confirm Password</label><input id="rcpass" type="password" minlength="6" required></div>
+<button class="btn primary">Create Account</button>
+</form>
+<p class="switch">Already have an account? <span class="link" onclick="show('login')">Login</span></p>
+</div>
+</section>
+
+<section id="login" class="hidden container">
+<div class="box">
+<h1>Welcome Back</h1><p class="muted">Login to continue learning.</p>
+<form class="form" onsubmit="login(event)">
+<div class="field"><label>Email</label><input id="lemail" type="email" required></div>
+<div class="field"><label>Password</label><input id="lpass" type="password" required></div>
+<button class="btn primary">Login</button>
+</form>
+<p class="switch">New student? <span class="link" onclick="show('register')">Create account</span></p>
+</div>
+</section>
+
+<section id="dashboard" class="hidden container">
+<div class="dashboard-head">
+<div><h1 id="welcome">Student Dashboard</h1><p class="muted">Continue your learning journey.</p></div>
+<button class="btn light" onclick="logout()">Logout</button>
+</div>
+<div class="stats">
+<div class="stat"><span class="muted">Enrolled Courses</span><strong id="enrolled">0</strong></div>
+<div class="stat"><span class="muted">Completed Courses</span><strong>0</strong></div>
+<div class="stat"><span class="muted">Certificates</span><strong>0</strong></div>
+</div>
+<h2 style="margin-bottom:15px">Available Courses</h2>
+<div class="courses">
+<div class="course"><div class="icon">🐍</div><h3>Python Programming</h3><p>12 lessons · Beginner</p><button class="btn primary" onclick="enroll('Python Programming')">Enroll</button></div>
+<div class="course"><div class="icon">☕</div><h3>Java Programming</h3><p>15 lessons · Beginner</p><button class="btn primary" onclick="enroll('Java Programming')">Enroll</button></div>
+<div class="course"><div class="icon">💻</div><h3>Web Development</h3><p>20 lessons · Intermediate</p><button class="btn primary" onclick="enroll('Web Development')">Enroll</button></div>
+</div>
+</section>
+</main>
+<div id="toast" class="toast"></div>
+
+<script>
+const getUsers=()=>JSON.parse(localStorage.getItem('learnhub_users')||'[]');
+function show(id){
+  document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2200)}
+function register(e){
+ e.preventDefault();
+ const name=rname.value,email=remail.value.toLowerCase(),phone=rphone.value,password=rpass.value;
+ if(password!==rcpass.value)return toast('Passwords do not match');
+ const users=getUsers();
+ if(users.some(u=>u.email===email))return toast('Email already registered');
+ users.push({name,email,phone,password,enrolled:[]});
+ localStorage.setItem('learnhub_users',JSON.stringify(users));
+ localStorage.setItem('learnhub_current',email);
+ toast('Account created successfully');
+ setTimeout(()=>dashboard(),500);
+}
+function login(e){
+ e.preventDefault();
+ const email=lemail.value.toLowerCase(),password=lpass.value;
+ const user=getUsers().find(u=>u.email===email&&u.password===password);
+ if(!user)return toast('Invalid email or password');
+ localStorage.setItem('learnhub_current',email);
+ dashboard();
+}
+function dashboard(){
+ const email=localStorage.getItem('learnhub_current');
+ const user=getUsers().find(u=>u.email===email);
+ if(!user)return show('login');
+ welcome.textContent='Hi, '+user.name+' 👋';
+ enrolled.textContent=user.enrolled.length;
+ show('dashboard');
+}
+function enroll(course){
+ const email=localStorage.getItem('learnhub_current');
+ if(!email){toast('Please login first');return show('login')}
+ const users=getUsers(),i=users.findIndex(u=>u.email===email);
+ if(!users[i].enrolled.includes(course)){users[i].enrolled.push(course);localStorage.setItem('learnhub_users',JSON.stringify(users));toast(course+' enrolled successfully');dashboard()}
+ else toast('Already enrolled in '+course);
+}
+function logout(){localStorage.removeItem('learnhub_current');show('home');toast('Logged out')}
+if(localStorage.getItem('learnhub_current'))dashboard();
+</script>
+</body>
+</html>
