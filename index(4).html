@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LearnHub — Free Technical Learning</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f8fafc;color:#172033;line-height:1.55}
+a{text-decoration:none;color:inherit}.container{width:min(1150px,94%);margin:auto}.hidden{display:none!important}
+nav{height:70px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;position:sticky;top:0;z-index:5}
+.nav{display:flex;justify-content:space-between;align-items:center}.logo{font-size:25px;font-weight:800;color:#2563eb}.navlinks{display:flex;gap:10px;align-items:center}
+.btn{border:0;border-radius:9px;padding:11px 17px;font-weight:700;cursor:pointer}.primary{background:#2563eb;color:#fff}.light{background:#eaf1ff;color:#2563eb}
+.page{padding:55px 0}.hero{padding:80px 0;background:linear-gradient(135deg,#eff6ff,#fff)}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.badge{display:inline-block;background:#dbeafe;color:#1d4ed8;padding:7px 12px;border-radius:30px;font-weight:700;font-size:14px;margin-bottom:16px}
+h1{font-size:clamp(40px,6vw,64px);line-height:1.05;margin-bottom:20px}h2{font-size:34px;margin-bottom:10px}.hero p,.muted{color:#64748b}.hero p{font-size:18px;margin-bottom:25px}
+.hero-card,.box,.card,.panel,.content,.quiz,.certificate{background:#fff;border:1px solid #e2e8f0;border-radius:16px}.hero-card{padding:28px;box-shadow:0 20px 50px #0f172a12}
+section{padding:65px 0}.section-head{text-align:center;max-width:650px;margin:0 auto 35px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{padding:22px}.icon{font-size:30px;background:#eff6ff;border-radius:12px;padding:13px;width:max-content;margin-bottom:13px}
+.box{max-width:440px;margin:auto;padding:30px}.form{margin-top:20px}.field{margin-bottom:14px}.field label{display:block;font-weight:700;margin-bottom:6px}.field input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px}.form .btn{width:100%;margin-top:5px}.switch{text-align:center;margin-top:16px}.link{color:#2563eb;font-weight:700;cursor:pointer}
+.dashboard-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}.stat{background:#fff;border:1px solid #e2e8f0;border-radius:15px;padding:20px}.stat strong{font-size:29px;display:block}
+.course-card{background:#fff;border:1px solid #e2e8f0;border-radius:15px;padding:20px}.course-card h3{margin:10px 0 5px}.course-card p{color:#64748b;margin-bottom:14px}.course-actions{display:flex;gap:8px;flex-wrap:wrap}
+.layout{display:grid;grid-template-columns:255px 1fr 220px;gap:18px}.panel,.content,.quiz,.certificate{padding:20px}.module{margin-top:17px}.module h4{margin-bottom:7px}.lesson{width:100%;text-align:left;border:0;background:#f8fafc;padding:9px;border-radius:8px;margin:4px 0;cursor:pointer}.lesson.active{background:#dbeafe;color:#1d4ed8;font-weight:700}.lesson.done:before{content:"✓ ";color:#16a34a;font-weight:800}.video{height:280px;background:#172033;color:#fff;border-radius:13px;display:grid;place-items:center;font-size:50px;margin:20px 0}
+.progressbar{height:10px;background:#e2e8f0;border-radius:20px;overflow:hidden;margin:10px 0}.progressbar span{display:block;height:100%;background:#2563eb}.percent{text-align:center;font-size:28px;font-weight:800;color:#2563eb}.actions{display:flex;justify-content:space-between;gap:10px;margin-top:22px}
+.option{display:block;border:1px solid #cbd5e1;padding:12px;border-radius:9px;margin:9px 0;cursor:pointer}.result{background:#eff6ff;padding:15px;border-radius:10px;margin-top:15px}.certificate{text-align:center;max-width:750px;margin:auto;border:8px double #2563eb;padding:45px}.certificate h1{font-size:42px}.cert-name{font-size:30px;font-weight:800;margin:18px}
+.toast{position:fixed;right:20px;bottom:20px;background:#172033;color:#fff;padding:13px 17px;border-radius:9px;display:none;z-index:20}
+footer{background:#0f172a;color:#cbd5e1;padding:35px 0;margin-top:30px}
+@media(max-width:900px){.hero-grid,.layout{grid-template-columns:1fr}.right{order:3}.sidebar{order:2}.stats,.cards{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.navlinks .desktop{display:none}.stats,.cards{grid-template-columns:1fr}.hero{padding:55px 0}.video{height:210px}.actions{flex-direction:column}}
+.admin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:25px 0}.admin-stat{background:#fff;border:1px solid #e2e8f0;border-radius:15px;padding:20px}.admin-stat strong{display:block;font-size:28px}.admin-panel{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px;margin-top:18px}.admin-table{width:100%;border-collapse:collapse;margin-top:15px}.admin-table th,.admin-table td{text-align:left;padding:12px;border-bottom:1px solid #e2e8f0}.admin-table th{background:#f8fafc}.admin-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.admin-form .full{grid-column:1/-1}@media(max-width:650px){.admin-grid{grid-template-columns:1fr 1fr}.admin-form{grid-template-columns:1fr}.admin-form .full{grid-column:auto}}
+.content-manager{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.manage-list{margin-top:12px}.manage-item{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#f8fafc;padding:11px;border-radius:9px;margin:7px 0}
+.quiz-question{border:1px solid #e2e8f0;padding:15px;border-radius:10px;margin-top:10px}
+@media(max-width:700px){.content-manager{grid-template-columns:1fr}}
+
+.quiz-admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.question-card{border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-top:12px;background:#fff}
+.question-card .answer{color:#15803d;font-weight:700}.quiz-admin-list{margin-top:12px}
+@media(max-width:700px){.quiz-admin-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav><div class="container nav">
+<div class="logo" onclick="go('home')" style="cursor:pointer">LearnHub</div>
+<div class="navlinks">
+<button class="btn light desktop" onclick="go('courses')">Courses</button>
+<button class="btn light" id="loginNav" onclick="go('login')">Login</button>
+<button class="btn primary" id="registerNav" onclick="go('register')">Get Started</button>
+<button class="btn light hidden" id="dashNav" onclick="go('dashboard')">Dashboard</button>
+<button class="btn light hidden" id="adminNav" onclick="go('admin')">Admin</button><button class="btn primary hidden" id="logoutNav" onclick="logout()">Logout</button>
+</div></div></nav>
+
+<main>
+<section id="home" class="hero">
+<div class="container hero-grid"><div>
+<span class="badge">100% Free Technical Learning</span>
+<h1>Learn Skills.<br>Build Your Future.</h1>
+<p>Learn practical technical skills, track your progress, complete quizzes and earn certificates.</p>
+<button class="btn primary" onclick="go('courses')">Explore Courses →</button>
+<button class="btn light" onclick="go('register')">Create Free Account</button>
+</div>
+<div class="hero-card"><h2>How Learning Works</h2><p class="muted">Create account → Choose course → Enroll → Learn → Quiz → Certificate</p><br>
+<div class="progressbar"><span style="width:72%"></span></div><b>Learn at your own pace.</b></div></div>
+</section>
+
+<section id="courses" class="container hidden">
+<div class="section-head"><h2>Technical Courses</h2><p class="muted">Choose a course and start learning.</p></div>
+<div id="courseList" class="cards"></div>
+</section>
+
+<section id="register" class="container hidden"><div class="box">
+<h2>Create Account</h2><p class="muted">Start your free learning journey.</p>
+<form class="form" onsubmit="register(event)">
+<div class="field"><label>Full Name</label><input id="rname" required></div>
+<div class="field"><label>Email</label><input id="remail" type="email" required></div>
+<div class="field"><label>Phone Number</label><input id="rphone" required></div>
+<div class="field"><label>Password</label><input id="rpass" type="password" minlength="6" required></div>
+<div class="field"><label>Confirm Password</label><input id="rcpass" type="password" minlength="6" required></div>
+<button class="btn primary">Create Account</button></form>
+<p class="switch">Already registered? <span class="link" onclick="go('login')">Login</span></p></div></section>
+
+<section id="login" class="container hidden"><div class="box">
+<h2>Welcome Back</h2><p class="muted">Login to continue learning.</p>
+<form class="form" onsubmit="login(event)">
+<div class="field"><label>Email</label><input id="lemail" type="email" required></div>
+<div class="field"><label>Password</label><input id="lpass" type="password" required></div>
+<button class="btn primary">Login</button></form>
+<p class="switch">New student? <span class="link" onclick="go('register')">Create account</span></p></div></section>
+
+<section id="dashboard" class="container hidden">
+<div class="dashboard-head"><div><h2 id="welcome">Student Dashboard</h2><p class="muted">Continue your learning journey.</p></div><button class="btn light" onclick="logout()">Logout</button></div>
+<div class="stats"><div class="stat"><span class="muted">Enrolled Courses</span><strong id="enrolledStat">0</strong></div><div class="stat"><span class="muted">Completed Courses</span><strong id="completedStat">0</strong></div><div class="stat"><span class="muted">Certificates</span><strong id="certStat">0</strong></div></div>
+<h2 style="font-size:25px;margin-bottom:15px">My Learning</h2><div id="myCourses" class="cards"></div></section>
+
+<section id="learn" class="container hidden">
+<div class="layout">
+<aside class="panel sidebar"><h3 id="learnCourseName">Python Programming</h3><p class="muted">8 Lessons</p><div id="lessonMenu"></div></aside>
+<div class="content"><p class="muted">Course Learning</p><h2 id="lessonTitle">Introduction to Python</h2><div class="video">▶</div><p id="lessonText" class="muted"></p>
+<a href="#" class="btn light" style="display:inline-block;margin-top:12px">📄 Lesson Notes</a>
+<div class="actions"><button class="btn light" onclick="prevLesson()">← Previous</button><button class="btn primary" id="completeBtn" onclick="completeLesson()">Mark as Completed ✓</button><button class="btn light" onclick="nextLesson()">Next →</button></div></div>
+<aside class="right"><div class="panel"><p class="muted">Course Progress</p><div id="percent" class="percent">0%</div><div class="progressbar"><span id="learnProgress"></span></div><p id="progressCount" class="muted">0 of 8 completed</p><button class="btn primary" style="width:100%;margin-top:18px" onclick="openQuiz()">Take Final Quiz</button></div></aside>
+</div></section>
+
+<section id="quiz" class="container hidden"><div class="quiz">
+<h2>Python Final Quiz</h2><p class="muted">Get all 3 questions correct to pass.</p><form onsubmit="submitQuiz(event)" style="margin-top:20px">
+<p><b>1. Which keyword defines a function?</b></p><label class="option"><input type="radio" name="q1" value="def"> def</label><label class="option"><input type="radio" name="q1" value="function"> function</label><br>
+<p><b>2. Which type stores True or False?</b></p><label class="option"><input type="radio" name="q2" value="bool"> Boolean</label><label class="option"><input type="radio" name="q2" value="str"> String</label><br>
+<p><b>3. Which symbol starts a Python comment?</b></p><label class="option"><input type="radio" name="q3" value="#"> #</label><label class="option"><input type="radio" name="q3" value="//"> //</label><br>
+<button class="btn primary">Submit Quiz</button></form><div id="quizResult" class="result hidden"></div><br><button class="btn light" onclick="go('learn')">← Back to Course</button>
+</div></section>
+
+<section id="admin" class="container hidden"><div class="dashboard-head"><div><h2>Admin Dashboard</h2><p class="muted">Manage courses and students.</p></div><button class="btn light" onclick="go('dashboard')">← Dashboard</button></div><div class="admin-grid"><div class="admin-stat"><span class="muted">Students</span><strong id="adminStudents">0</strong></div><div class="admin-stat"><span class="muted">Courses</span><strong id="adminCourses">0</strong></div><div class="admin-stat"><span class="muted">Enrollments</span><strong id="adminEnrollments">0</strong></div><div class="admin-stat"><span class="muted">Certificates</span><strong id="adminCertificates">0</strong></div></div><div class="admin-panel"><h3>Add Course</h3><form class="admin-form" onsubmit="addAdminCourse(event)" style="margin-top:15px"><div class="field"><label>Course Name</label><input id="adminCourseName" required></div><div class="field"><label>Level</label><input id="adminCourseLevel" required></div><div class="field full"><label>Description</label><input id="adminCourseDesc" required></div><button class="btn primary">Add Course</button></form></div><div class="admin-panel"><h3>Courses</h3><table class="admin-table"><thead><tr><th>Course</th><th>Level</th><th>Lessons</th><th>Action</th></tr></thead><tbody id="adminCourseRows"></tbody></table></div>
+<div class="admin-panel">
+<h3>Course Content Manager</h3>
+<p class="muted">Select a course, then add modules and lessons. These are stored locally for this demo.</p>
+<div class="content-manager" style="margin-top:15px">
+<div>
+<label><b>Course</b></label>
+<select id="contentCourse" style="width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;margin-top:6px" onchange="renderContentManager()"></select>
+<h4 style="margin-top:18px">Add Module</h4>
+<form onsubmit="addModule(event)" style="margin-top:8px">
+<input id="moduleName" placeholder="Module name" required style="width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px">
+<button class="btn primary" style="margin-top:8px">Add Module</button>
+</form>
+<div id="moduleList" class="manage-list"></div>
+</div>
+<div>
+<h4>Add Lesson</h4>
+<form onsubmit="addLesson(event)" style="margin-top:8px">
+<select id="lessonModule" required style="width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;margin-bottom:8px"></select>
+<input id="lessonName" placeholder="Lesson title" required style="width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;margin-bottom:8px">
+<input id="lessonDesc" placeholder="Lesson description" required style="width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px">
+<button class="btn primary" style="margin-top:8px">Add Lesson</button>
+</form>
+<div id="lessonListAdmin" class="manage-list"></div>
+</div>
+</div>
+</div>
+
+
+<div class="admin-panel">
+<h3>Quiz Management</h3>
+<p class="muted">Create questions for each course. The correct answer is stored locally for this demo.</p>
+<div class="quiz-admin-grid" style="margin-top:15px">
+<div>
+<label><b>Course</b></label>
+<select id="quizCourse" onchange="renderQuizManager()" style="width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;margin-top:6px"></select>
+<form onsubmit="addQuizQuestion(event)" style="margin-top:15px">
+<div class="field"><label>Question</label><input id="quizQuestion" required></div>
+<div class="field"><label>Option A</label><input id="quizA" required></div>
+<div class="field"><label>Option B</label><input id="quizB" required></div>
+<div class="field"><label>Option C</label><input id="quizC" required></div>
+<div class="field"><label>Option D</label><input id="quizD" required></div>
+<div class="field"><label>Correct Option</label>
+<select id="quizCorrect" required style="width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px">
+<option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+</select></div>
+<button class="btn primary">Add Question</button>
+</form>
+</div>
+<div>
+<h4>Questions</h4>
+<div id="quizQuestionList" class="quiz-admin-list"></div>
+</div>
+</div>
+</div>
+
+<div class="admin-panel"><h3>Students</h3><table class="admin-table"><thead><tr><th>Name</th><th>Email</th><th>Enrolled</th><th>Certificate</th></tr></thead><tbody id="adminStudentRows"></tbody></table></div></section>
+<section id="dynamicLearn" class="container hidden">
+<div class="layout">
+<aside class="panel sidebar"><h3 id="dynamicCourseName"></h3><div id="dynamicLessonMenu"></div></aside>
+<div class="content"><p class="muted">Course Learning</p><h2 id="dynamicLessonTitle"></h2><div class="video">▶</div><p id="dynamicLessonDesc" class="muted"></p><div class="actions"><button class="btn light" onclick="dynamicPrev()">← Previous</button><button class="btn primary" id="dynamicComplete" onclick="dynamicComplete()">Mark as Completed ✓</button><button class="btn light" onclick="dynamicNext()">Next →</button></div></div>
+<aside class="right"><div class="panel"><p class="muted">Progress</p><div class="percent" id="dynamicPercent">0%</div><div class="progressbar"><span id="dynamicProgress"></span></div><p id="dynamicCount" class="muted"></p></div></aside>
+</div>
+</section>
+
+
+<section id="dynamicQuiz" class="container hidden">
+<div class="quiz">
+<h2 id="dynamicQuizTitle">Course Quiz</h2>
+<p class="muted">Answer all questions. Your score will be calculated automatically.</p>
+<form id="dynamicQuizForm" onsubmit="submitDynamicQuiz(event)" style="margin-top:20px"></form>
+<div id="dynamicQuizResult" class="result hidden"></div>
+<br><button class="btn light" onclick="go('dashboard')">← Dashboard</button>
+</div>
+</section>
+
+<section id="certificate" class="container hidden"><div class="certificate">
+<p>LEARNHUB</p><h1>Certificate of Completion</h1><p>This certificate is proudly presented to</p><div class="cert-name" id="certName">Student</div><p>for successfully completing</p><h2>Python Programming</h2><p style="margin:18px">Certificate ID: LH-PY-2026-001</p><p>Completion Date: <span id="certDate"></span></p><br><button class="btn primary" onclick="window.print()">Print / Save Certificate</button><button class="btn light" onclick="go('dashboard')">Dashboard</button>
+</div></section>
+</main>
+
+<footer><div class="container"><b>LearnHub</b> — Learn Skills. Build Your Future.</div></footer>
+<div id="toast" class="toast"></div>
+
+<script>
+const courses=[
+{id:"python",name:"Python Programming",icon:"🐍",lessons:8,level:"Beginner",desc:"Learn Python from basics to practical programming."},
+{id:"java",name:"Java Programming",icon:"☕",lessons:15,level:"Beginner",desc:"Build a strong foundation in Java development."},
+{id:"web",name:"Web Development",icon:"💻",lessons:20,level:"Intermediate",desc:"Create responsive websites with modern technologies."}
+];
+const lessons=[
+["Introduction to Python","Learn what Python is, where it is used, and how to begin writing your first program."],
+["Variables & Data Types","Learn strings, integers, floats and booleans."],["Operators","Understand arithmetic, comparison and logical operators."],
+["Conditional Statements","Learn if, elif and else."],["Loops","Practice for and while loops."],["Functions","Create reusable blocks of code."],
+["Lists & Dictionaries","Work with Python collections."],["Mini Project","Apply your knowledge in a small project."]
+];
+let currentLesson=0;
+function users(){return JSON.parse(localStorage.getItem("learnhub_users")||"[]")}
+function currentUser(){let e=localStorage.getItem("learnhub_current");return users().find(u=>u.email===e)}
+function saveUsers(x){localStorage.setItem("learnhub_users",JSON.stringify(x))}
+function progress(){return JSON.parse(localStorage.getItem("learnhub_python_progress")||"[]")}
+function saveProgress(x){localStorage.setItem("learnhub_python_progress",JSON.stringify(x))}
+function toast(m){let t=document.getElementById("toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",2100)}
+function go(id){
+ document.querySelectorAll("main>section").forEach(s=>s.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+ if(id==="courses")renderCourses(); if(id==="dashboard")renderDashboard(); if(id==="learn")renderLearn(); if(id==="admin")renderAdmin();
+ if(id==="certificate")renderCertificate();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function register(e){e.preventDefault();let name=rname.value,email=remail.value.toLowerCase(),phone=rphone.value,password=rpass.value;
+ if(password!==rcpass.value)return toast("Passwords do not match");let u=users();if(u.some(x=>x.email===email))return toast("Email already registered");
+ u.push({name,email,phone,password,enrolled:[],completed:false,certificate:false});saveUsers(u);localStorage.setItem("learnhub_current",email);updateNav();toast("Account created");setTimeout(()=>go("dashboard"),400)}
+function login(e){e.preventDefault();let email=lemail.value.toLowerCase(),password=lpass.value,u=users().find(x=>x.email===email&&x.password===password);if(!u)return toast("Invalid email or password");localStorage.setItem("learnhub_current",email);updateNav();go("dashboard")}
+function logout(){localStorage.removeItem("learnhub_current");updateNav();go("home");toast("Logged out")}
+
+let dynamicCourseId=null,dynamicLessonIndex=0;
+function contentData(){return JSON.parse(localStorage.getItem("learnhub_course_content")||"{}")}
+function saveContentData(x){localStorage.setItem("learnhub_course_content",JSON.stringify(x))}
+function getCourseContent(id){
+ let d=contentData();
+ if(!d[id])d[id]={modules:[{id:"m1",name:"Getting Started",lessons:[]}],quiz:[]};
+ return d[id];
+}
+function renderContentManager(){
+ let list=allCourses(),sel=document.getElementById("contentCourse");
+ if(!sel)return;
+ let old=sel.value;sel.innerHTML=list.map(c=>`<option value="${c.id}">${c.name}</option>`).join("");
+ if(old && list.some(c=>c.id===old))sel.value=old;
+ let c=getCourseContent(sel.value);saveContentData({...contentData(),[sel.value]:c});
+ moduleList.innerHTML=c.modules.map((m,i)=>`<div class="manage-item"><span><b>${m.name}</b><br><small>${m.lessons.length} lessons</small></span><button class="btn light" onclick="deleteModule('${m.id}')">Delete</button></div>`).join("");
+ lessonModule.innerHTML=c.modules.map(m=>`<option value="${m.id}">${m.name}</option>`).join("");
+ let lessons=c.modules.flatMap(m=>m.lessons.map(l=>({...l,module:m.name})));
+ lessonListAdmin.innerHTML=lessons.length?lessons.map(l=>`<div class="manage-item"><span><b>${l.title}</b><br><small>${l.module}</small></span></div>`).join(""):"<p class='muted'>No lessons yet.</p>";
+}
+function addModule(e){
+ e.preventDefault();let id=contentCourse.value,d=getCourseContent(id);
+ d.modules.push({id:"m_"+Date.now(),name:moduleName.value.trim(),lessons:[]});
+ let all=contentData();all[id]=d;saveContentData(all);e.target.reset();renderContentManager();toast("Module added");
+}
+function deleteModule(id){
+ let cid=contentCourse.value,d=getCourseContent(cid);if(d.modules.length<=1)return toast("At least one module is required");
+ d.modules=d.modules.filter(m=>m.id!==id);let all=contentData();all[cid]=d;saveContentData(all);renderContentManager();toast("Module deleted");
+}
+function addLesson(e){
+ e.preventDefault();let cid=contentCourse.value,d=getCourseContent(cid),m=d.modules.find(x=>x.id===lessonModule.value);
+ m.lessons.push({id:"l_"+Date.now(),title:lessonName.value.trim(),desc:lessonDesc.value.trim()});
+ let all=contentData();all[cid]=d;saveContentData(all);e.target.reset();renderContentManager();toast("Lesson added");
+}
+function openDynamicCourse(id){
+ let c=allCourses().find(x=>x.id===id),d=getCourseContent(id),flat=d.modules.flatMap(m=>m.lessons.map(l=>({...l,module:m.name})));
+ if(!flat.length)return toast("Admin has not added lessons for this course yet.");
+ dynamicCourseId=id;dynamicLessonIndex=0;renderDynamic();go("dynamicLearn");
+}
+function dynamicProgressKey(){return "learnhub_dynamic_progress_"+dynamicCourseId}
+function dynamicProgress(){return JSON.parse(localStorage.getItem(dynamicProgressKey())||"[]")}
+function renderDynamic(){
+ let c=allCourses().find(x=>x.id===dynamicCourseId),d=getCourseContent(dynamicCourseId),flat=d.modules.flatMap(m=>m.lessons.map(l=>({...l,module:m.name}))),p=dynamicProgress();
+ dynamicCourseName.textContent=c.name;
+ dynamicLessonMenu.innerHTML=d.modules.map(m=>`<div class="module"><h4>${m.name}</h4>${m.lessons.map(l=>{let i=flat.findIndex(x=>x.id===l.id);return `<button class="lesson ${i===dynamicLessonIndex?"active ":""}${p.includes(i)?"done":""}" onclick="dynamicSelect(${i})">${l.title}</button>`}).join("")}</div>`).join("");
+ let l=flat[dynamicLessonIndex];dynamicLessonTitle.textContent=l.title;dynamicLessonDesc.textContent=l.desc;
+ let pct=flat.length?Math.round(p.length/flat.length*100):0;dynamicPercent.textContent=pct+"%";dynamicProgress.style.width=pct+"%";dynamicCount.textContent=p.length+" of "+flat.length+" lessons completed";dynamicComplete.textContent=p.includes(dynamicLessonIndex)?"Completed ✓":"Mark as Completed ✓";
+}
+function dynamicSelect(i){dynamicLessonIndex=i;renderDynamic()}
+function dynamicComplete(){let p=dynamicProgress();if(!p.includes(dynamicLessonIndex)){p.push(dynamicLessonIndex);p.sort((a,b)=>a-b);localStorage.setItem(dynamicProgressKey(),JSON.stringify(p));toast("Lesson completed ✓")}renderDynamic()}
+function dynamicNext(){let d=getCourseContent(dynamicCourseId),flat=d.modules.flatMap(m=>m.lessons);if(dynamicLessonIndex<flat.length-1){dynamicLessonIndex++;renderDynamic()}else toast("Final lesson reached")}
+function dynamicPrev(){if(dynamicLessonIndex>0){dynamicLessonIndex--;renderDynamic()}}
+
+function quizData(){return JSON.parse(localStorage.getItem("learnhub_quizzes")||"{}")}
+function saveQuizData(x){localStorage.setItem("learnhub_quizzes",JSON.stringify(x))}
+function getQuiz(id){let d=quizData();return d[id]||[]}
+function renderQuizManager(){
+ let sel=document.getElementById("quizCourse");if(!sel)return;
+ let old=sel.value;sel.innerHTML=allCourses().map(c=>`<option value="${c.id}">${c.name}</option>`).join("");
+ if(old && allCourses().some(c=>c.id===old))sel.value=old;
+ let q=getQuiz(sel.value);
+ quizQuestionList.innerHTML=q.length?q.map((x,i)=>`
+ <div class="question-card">
+ <b>Q${i+1}. ${x.question}</b>
+ <p>A. ${x.options.A}</p><p>B. ${x.options.B}</p><p>C. ${x.options.C}</p><p>D. ${x.options.D}</p>
+ <p class="answer">Correct: ${x.correct}</p>
+ <button class="btn light" onclick="deleteQuizQuestion(${i})">Delete</button>
+ </div>`).join(""):"<p class='muted'>No questions added yet.</p>";
+}
+function addQuizQuestion(e){
+ e.preventDefault();
+ let id=quizCourse.value,d=getQuiz(id);
+ d.push({id:"q_"+Date.now(),question:quizQuestion.value.trim(),options:{A:quizA.value.trim(),B:quizB.value.trim(),C:quizC.value.trim(),D:quizD.value.trim()},correct:quizCorrect.value});
+ let all=quizData();all[id]=d;saveQuizData(all);e.target.reset();renderQuizManager();toast("Quiz question added");
+}
+function deleteQuizQuestion(i){
+ let id=quizCourse.value,d=getQuiz(id);d.splice(i,1);let all=quizData();all[id]=d;saveQuizData(all);renderQuizManager();toast("Question deleted");
+}
+function openDynamicQuiz(id){
+ let q=getQuiz(id);
+ if(!q.length)return toast("Admin has not added quiz questions yet.");
+ dynamicQuizTitle.textContent=(allCourses().find(c=>c.id===id)?.name||"Course")+" Quiz";
+ dynamicQuizForm.dataset.course=id;
+ dynamicQuizForm.innerHTML=q.map((x,i)=>`
+ <div style="margin-bottom:22px">
+ <p><b>${i+1}. ${x.question}</b></p>
+ <label class="option"><input type="radio" name="dq${i}" value="A" required> A. ${x.options.A}</label>
+ <label class="option"><input type="radio" name="dq${i}" value="B"> B. ${x.options.B}</label>
+ <label class="option"><input type="radio" name="dq${i}" value="C"> C. ${x.options.C}</label>
+ <label class="option"><input type="radio" name="dq${i}" value="D"> D. ${x.options.D}</label>
+ </div>`).join("")+`<button class="btn primary">Submit Quiz</button>`;
+ dynamicQuizResult.classList.add("hidden");go("dynamicQuiz");
+}
+function submitDynamicQuiz(e){
+ e.preventDefault();
+ let id=e.target.dataset.course,q=getQuiz(id),score=0;
+ q.forEach((x,i)=>{if(document.querySelector('input[name="dq'+i+'"]:checked')?.value===x.correct)score++});
+ let pct=Math.round(score/q.length*100),passed=pct>=70;
+ dynamicQuizResult.classList.remove("hidden");
+ if(passed){
+  let u=currentUser(),all=users(),idx=all.findIndex(x=>x.email===u.email);
+  if(idx>=0){all[idx].completedCourses=all[idx].completedCourses||[];if(!all[idx].completedCourses.includes(id))all[idx].completedCourses.push(id);saveUsers(all)}
+  dynamicQuizResult.innerHTML=`<b>🎉 Passed! ${score}/${q.length} (${pct}%)</b><br>You passed the course quiz.<br><br><button class="btn primary" onclick="showDynamicCertificate('${id}')">View Certificate</button>`;
+ }else dynamicQuizResult.innerHTML=`<b>Score: ${score}/${q.length} (${pct}%)</b><br>You need at least 70% to pass. Please review the course and try again.`;
+}
+function showDynamicCertificate(id){
+ let c=allCourses().find(x=>x.id===id),u=currentUser();
+ if(u){let all=users(),idx=all.findIndex(x=>x.email===u.email);if(idx>=0){all[idx].certificate=true;saveUsers(all)}}
+ certName.textContent=u?.name||"Student";certDate.textContent=new Date().toLocaleDateString();
+ document.querySelector("#certificate h2").textContent=c?.name||"Course";
+ go("certificate");
+}
+function getAdminCourses(){return JSON.parse(localStorage.getItem("learnhub_admin_courses")||"[]")}function saveAdminCourses(x){localStorage.setItem("learnhub_admin_courses",JSON.stringify(x))}function allCourses(){return courses.concat(getAdminCourses())}function renderAdmin(){let u=users(),a=getAdminCourses(),all=allCourses();adminStudents.textContent=u.length;adminCourses.textContent=all.length;adminEnrollments.textContent=u.reduce((n,x)=>n+(x.enrolled||[]).length,0);adminCertificates.textContent=u.filter(x=>x.certificate).length;adminCourseRows.innerHTML=all.map(c=>`<tr><td>${c.icon||"📘"} ${c.name}</td><td>${c.level}</td><td>${c.lessons||10}</td><td>${c.adminCreated?`<button class="btn light" onclick="deleteAdminCourse('${c.id}')">Delete</button>`:"Default"}</td></tr>`).join("");renderContentManager();renderQuizManager();adminStudentRows.innerHTML=u.length?u.map(x=>`<tr><td>${x.name}</td><td>${x.email}</td><td>${(x.enrolled||[]).length}</td><td>${x.certificate?"🏆 Yes":"No"}</td></tr>`).join(""):`<tr><td colspan="4">No students yet.</td></tr>`}function addAdminCourse(e){e.preventDefault();let a=getAdminCourses();a.push({id:"custom_"+Date.now(),name:adminCourseName.value.trim(),level:adminCourseLevel.value.trim(),desc:adminCourseDesc.value.trim(),lessons:10,icon:"📘",adminCreated:true});saveAdminCourses(a);e.target.reset();toast("Course added");renderAdmin();renderCourses()}function deleteAdminCourse(id){if(!confirm("Delete this course?"))return;saveAdminCourses(getAdminCourses().filter(c=>c.id!==id));renderAdmin();renderCourses();toast("Course deleted")}function updateNav(){let logged=!!currentUser();adminNav.classList.toggle("hidden",!logged);loginNav.classList.toggle("hidden",logged);registerNav.classList.toggle("hidden",logged);dashNav.classList.toggle("hidden",!logged);logoutNav.classList.toggle("hidden",!logged)}
+function renderCourses(){courseList.innerHTML=allCourses().map(c=>`<div class="course-card"><div class="icon">${c.icon}</div><h3>${c.name}</h3><p>${c.desc}</p><small>${c.lessons} lessons · ${c.level}</small><br><br><button class="btn primary" onclick="enroll('${c.id}')">Enroll</button></div>`).join("")}
+function enroll(id){let u=currentUser();if(!u)return go("login");if(!u.enrolled.includes(id)){u.enrolled.push(id);let all=users(),i=all.findIndex(x=>x.email===u.email);all[i]=u;saveUsers(all);toast("Course enrolled successfully")}else toast("Already enrolled");go("dashboard")}
+function renderDashboard(){let u=currentUser();if(!u)return go("login");let p=progress();welcome.textContent="Hi, "+u.name+" 👋";enrolledStat.textContent=u.enrolled.length;completedStat.textContent=u.completed?1:0;certStat.textContent=u.certificate?1:0;
+ myCourses.innerHTML=(u.enrolled.length?u.enrolled.map(id=>{let c=allCourses().find(x=>x.id===id);let pct=id==="python"?Math.round(p.length/8*100):0;return `<div class="course-card"><div class="icon">${c.icon}</div><h3>${c.name}</h3><p>${c.lessons} lessons · ${c.level}</p><div class="progressbar"><span style="width:${pct}%"></span></div><small>${pct}% completed</small><br><br><button class="btn primary" onclick="openCourse('${id}')">${pct?"Continue Learning":"Start Learning"}</button></div>`}).join(""):"<p class='muted'>No courses enrolled yet. Explore courses to get started.</p>")}
+function openCourse(id){if(id==="python"){go("learn");return} if(getCourseContent(id).modules.some(m=>m.lessons.length))openDynamicCourse(id);else toast("Admin has not added lessons for this course yet.")}
+function renderLearn(){let p=progress();learnCourseName.textContent="Python Programming";lessonMenu.innerHTML=`<div class="module"><h4>Module 1 — Basics</h4>${[0,1,2].map(i=>lessonBtn(i,p)).join("")}</div><div class="module"><h4>Module 2 — Core Python</h4>${[3,4,5].map(i=>lessonBtn(i,p)).join("")}</div><div class="module"><h4>Module 3 — Practice</h4>${[6,7].map(i=>lessonBtn(i,p)).join("")}</div>`;renderLesson()}
+function lessonBtn(i,p){return `<button class="lesson ${i===currentLesson?"active ":""}${p.includes(i)?"done":""}" onclick="selectLesson(${i})">${lessons[i][0]}</button>`}
+function selectLesson(i){currentLesson=i;renderLearn()}
+function renderLesson(){let p=progress();lessonTitle.textContent=lessons[currentLesson][0];lessonText.textContent=lessons[currentLesson][1];completeBtn.textContent=p.includes(currentLesson)?"Completed ✓":"Mark as Completed ✓";let pct=Math.round(p.length/8*100);percent.textContent=pct+"%";learnProgress.style.width=pct+"%";progressCount.textContent=p.length+" of 8 lessons completed"}
+function completeLesson(){let p=progress();if(!p.includes(currentLesson)){p.push(currentLesson);p.sort((a,b)=>a-b);saveProgress(p);toast("Lesson completed ✓")}renderLearn()}
+function nextLesson(){if(currentLesson<7){currentLesson++;renderLearn()}else toast("Final lesson reached")}
+function prevLesson(){if(currentLesson>0){currentLesson--;renderLearn()}}
+function openQuiz(){if(progress().length<8)return toast("Complete all 8 lessons first");go("quiz")}
+function submitQuiz(e){e.preventDefault();let s=0;if(document.querySelector('input[name="q1"]:checked')?.value==="def")s++;if(document.querySelector('input[name="q2"]:checked')?.value==="bool")s++;if(document.querySelector('input[name="q3"]:checked')?.value==="#")s++;
+quizResult.classList.remove("hidden");if(s===3){let all=users(),u=currentUser(),i=all.findIndex(x=>x.email===u.email);all[i].completed=true;all[i].certificate=true;saveUsers(all);quizResult.innerHTML="<b>🎉 Passed — 3/3</b><br>Your certificate is ready.<br><br><button class='btn primary' onclick='go(\"certificate\")'>View Certificate</button>";toast("Course completed!")}else quizResult.innerHTML="<b>Score: "+s+"/3</b><br>Review the lessons and try again."}
+function renderCertificate(){let u=currentUser();if(!u||!u.certificate)return go("dashboard");certName.textContent=u.name;certDate.textContent=new Date().toLocaleDateString()}
+updateNav();if(currentUser())go("dashboard");else go("home");
+</script>
+</body></html>
